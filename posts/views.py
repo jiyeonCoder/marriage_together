@@ -24,7 +24,12 @@ class PostView(APIView):
             return Response({'error': '권한이 없습니다.'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
-class PostDetailView(APIView):  
+class PostDetailView(APIView):
+    def get(self, request, post_id):
+        post = get_object_or_404(Post, id=post_id)
+        serializer = PostSerializer(post)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
     def put(self, request, post_id):
         post = get_object_or_404(Post, id=post_id)
         if request.user == post.user:
@@ -38,4 +43,9 @@ class PostDetailView(APIView):
             return Response({'error': '권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
 
     def delete(self, request, post_id):
-        pass
+        post = get_object_or_404(Post, id=post_id)
+        if request.user == post.user:
+            post.delete()
+            return Response({'게시글이 삭제되었습니다.'}, status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response({'error': '권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
