@@ -7,6 +7,7 @@ from posts.serializers import PostSerializer, PostCreateSerializer
 
 
 class PostView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     def get(self, request):
         posts = Post.objects.all()
         serializer = PostSerializer(posts, many=True)
@@ -25,6 +26,7 @@ class PostView(APIView):
 
 
 class PostDetailView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
     def get(self, request, post_id):
         post = get_object_or_404(Post, id=post_id)
         serializer = PostSerializer(post)
