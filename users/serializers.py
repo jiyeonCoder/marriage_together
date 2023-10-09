@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from users.models import User
+from users.models import User, Profile
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
@@ -30,3 +30,15 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
         token['email'] = user.email
         return token
+    
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = "__all__"
+    
+
+class ProfileCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ("image", "introduce_me", "name", "age", "job", "religion", "my_character", "purpose_to_join")
