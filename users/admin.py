@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib import admin
+from django.utils.safestring import mark_safe
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
@@ -69,6 +70,17 @@ class UserAdmin(BaseUserAdmin):
     filter_horizontal = []
 
 
+@admin.register(Profile) #@를 붙이면 데코레이터
+class Profileadmin(admin.ModelAdmin): 
+    list_display = ['image_tag', 'introduce_me', 'name', 'age', 'job', 'religion', 'my_character', 'purpose_to_join']   #image가 화면에 보이게하려면 method로 넣어서 보이게해야함.보안상 장고가 막아두기때문
+
+    def image_tag(self, profile):
+        if not profile.image: 
+            return mark_safe(f"<img src='' style = 'width: 500px'/>") #보안상 막아둔거 푸는작업
+
+
+        return mark_safe(f"<img src={profile.image.url} style = 'width: 500px'/>") #보안상 막아둔거 푸는작업
+
+
 admin.site.register(User, UserAdmin)
-admin.site.register(Profile)
 admin.site.unregister(Group)
