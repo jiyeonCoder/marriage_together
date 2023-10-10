@@ -34,7 +34,7 @@ class UserView(APIView):
         return Response("message: User deleted successfully")
         
 
-class TokenObtainPairView(TokenObtainPairView):
+#class TokenObtainPairView(TokenObtainPairView):
     #serializer_class = TokenObtainPairSerializer
 
 
@@ -49,8 +49,8 @@ class mockView(APIView):
         return Response("message: get 요청")
 
 
-class ProfileView(APIView):
-    def get(self, request, user_id):
-        user = get_object_or_404(User, id=user_id)
-        serializer = UserProfileSerializer(user)
-        return Response(serializer.data)
+# class ProfileView(APIView):
+#     def get(self, request, user_id):
+#         user = get_object_or_404(User, id=user_id)
+#         serializer = UserProfileSerializer(user)
+#         return Response(serializer.data)
