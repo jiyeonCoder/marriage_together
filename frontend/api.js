@@ -62,3 +62,24 @@ function handleLogout(){
     localStorage.removeItem("refresh")
     localStorage.removeItem("payload")
 }
+
+
+async function handlePostSubmit(){
+    // const image = document.getElementById("image").value
+    const title = document.getElementById("title").value
+    const content = document.getElementById("content").value
+    console.log(title, content)
+    
+    const response = await fetch('http://127.0.0.1:8000/posts/', {
+        headers:{
+            'content-type':'application/json',
+        },
+        method:'POST',
+        body: JSON.stringify({
+            // "image": image,
+            "title": title,
+            "content": content
+        })
+    })
+    console.log(response)
+}
