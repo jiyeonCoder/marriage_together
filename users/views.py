@@ -7,9 +7,10 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
 )
+from users.models import Profile
 
 from users.models import User
-from users.serializers import CustomTokenObtainPairSerializer, UserSerializer, UserProfileSerializer
+from users.serializers import CustomTokenObtainPairSerializer, UserSerializer, UserProfileSerializer, ProfileSerializer, ProfileCreateSerializer
 
 class UserView(APIView):
     #사용자 정보 조회
@@ -32,11 +33,7 @@ class UserView(APIView):
     #회원 탈퇴
     def delete(self, request):
         return Response("message: User deleted successfully")
-        
-
-#class TokenObtainPairView(TokenObtainPairView):
-    #serializer_class = TokenObtainPairSerializer
-
+    
 
 class mockView(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -49,8 +46,45 @@ class mockView(APIView):
         return Response("message: get 요청")
 
 
-# class ProfileView(APIView):
-#     def get(self, request, user_id):
-#         user = get_object_or_404(User, id=user_id)
-#         serializer = UserProfileSerializer(user)
-#         return Response(serializer.data)
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+
+    
+class MyProfileView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def get(self, request, user_id):
+        profile = get_object_or_404(Profile, id=user_id)
+        if request.user == profile.user:
+            # profile = get_object_or_404(Profile, id=user_id)
+            serializer = ProfileSerializer(profile)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': '권한이 없습니다.'}, status=status.HTTP_401_UNAUTHORIZED)
+    
+    def post(self, request, user_id):
+        serializer = ProfileCreateSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+    def put(self, request, user_id):
+        profile = get_object_or_404(Profile, id=user_id)
+        if request.user == profile.user:
+            serializer = ProfileCreateSerializer(profile, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'error': '권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
+
+
+class ProfileView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def get(self, request, user_id):
+        profile = get_object_or_404(Profile, id=user_id)
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data, status=status.HTTP_200_OK)
