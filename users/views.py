@@ -7,9 +7,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
 )
-from users.models import Profile
-
-from users.models import User
+from users.models import Profile, User
 from users.serializers import CustomTokenObtainPairSerializer, UserSerializer, UserProfileSerializer, ProfileSerializer, ProfileCreateSerializer
 
 class UserView(APIView):
