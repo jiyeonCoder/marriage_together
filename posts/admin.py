@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
-from posts.models import Post
+from posts.models import Post, Comment
 
 
 @admin.register(Post) #@를 붙이면 데코레이터
@@ -13,3 +13,5 @@ class Postadmin(admin.ModelAdmin):
 
 
         return mark_safe(f"<img src={post.image.url} style = 'width: 500px'/>") #보안상 막아둔거 푸는작업
+    
+admin.site.register(Comment)
