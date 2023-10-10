@@ -36,21 +36,8 @@ class UserView(APIView):
         return Response("message: User deleted successfully")
         
 
-
-class FollowView(APIView):
-    def post(self, request, user_id):
-        you = get_object_or_404(User, id=user_id)
-        me = request.user
-        if me in you.followers.all():
-            you.followers.remove(me)
-            return Response("message: 언팔로우", status=status.HTTP_200_OK)
-        else:
-            you.followers.add(me)
-            return Response("message: 팔로우", status=status.HTTP_200_OK)
-
-
-class CustomTokenObtainPairView(TokenObtainPairView):
-    serializer_class = CustomTokenObtainPairSerializer
+class TokenObtainPairView(TokenObtainPairView):
+    serializer_class = TokenObtainPairSerializer
 
 
 class mockView(APIView):

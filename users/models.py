@@ -3,11 +3,13 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, password=None):
-        if not username:
-            raise ValueError("Users must have a username")
+    def create_user(self, email, password=None):
+        if not email:
+            raise ValueError("Users must have an email address")
         user = self.model(
-            username = username,
+            email = self.normalize_email(email),
+            date_of_birth = date_of_birth,
+            password = password,
         )
         print("가입")
         
@@ -38,13 +40,14 @@ class User(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    followings = models.ManyToManyField("self", symmetrical=False, related_name="followers", blank=True)
+    date_of_birth = models.DateField()
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
     objects = UserManager()
 
     USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username", "password"]
 
     def __str__(self):
         return self.email
