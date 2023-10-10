@@ -16,7 +16,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ["email"]
+        fields = ["email",]
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -36,27 +36,22 @@ class UserCreationForm(forms.ModelForm):
 
 
 class UserChangeForm(forms.ModelForm):
-    """A form for updating users. Includes all the fields on
-    the user, but replaces the password field with admin's
-    disabled password hash display field.
-    """
-
     password = ReadOnlyPasswordHashField()
 
     class Meta:
         model = User
-        fields = ["email", ]
+        fields = ["email", "password", "is_active", "is_admin"]
 
 
 class UserAdmin(BaseUserAdmin):
-    # The forms to add and change user instances
     form = UserChangeForm
     add_form = UserCreationForm
 
-    list_display = ["id","email", "is_admin"]
+    list_display = ["email", "is_admin"]
     list_filter = ["is_admin"]
     fieldsets = [
         (None, {"fields": ("email", "password", "followings")}),
+        ("Personal info", {"fields": ("date_of_birth",)}),
         ("Permissions", {"fields": ["is_admin"]}),
     ]
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
@@ -65,13 +60,13 @@ class UserAdmin(BaseUserAdmin):
         (
             None,
             {
-                "classes": ["wide"],
-                "fields": ["email", "password1", "password2"],
+                "classes": ["wide",],
+                "fields": ["email", "date_of_birth","password1", "password2",],
             },
         ),
     ]
-    search_fields = ["email"]
-    ordering = ["email"]
+    search_fields = ["email",]
+    ordering = ["email",]
     filter_horizontal = []
 
 

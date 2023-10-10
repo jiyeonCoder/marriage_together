@@ -10,20 +10,18 @@ from rest_framework_simplejwt.views import (
 
 from users.models import User
 from users.serializers import CustomTokenObtainPairSerializer, UserSerializer, UserProfileSerializer
-from articles.models import Article
-from articles.serializers import ArticleSerializer
 
 class UserView(APIView):
     #사용자 정보 조회
     def get(self, request):
-        return Response(UserSignupSerializer(request.user).data, status=status.HTTP_200_OK)
+        return Response(UserSerializer(request.user).data, status=status.HTTP_200_OK)
 
     #회원가입
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response("message: User created successfully")
+            return Response({"message: User created successfully"}, status=status.HTTP_201_CREATED)
         else:
             return Response({"message": f"${serializer.errors}"}, status=status.HTTP_400_BAD_REQUEST)
     
@@ -37,7 +35,7 @@ class UserView(APIView):
         
 
 class TokenObtainPairView(TokenObtainPairView):
-    serializer_class = TokenObtainPairSerializer
+    #serializer_class = TokenObtainPairSerializer
 
 
 class mockView(APIView):
