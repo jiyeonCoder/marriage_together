@@ -8,7 +8,9 @@ class UserManager(BaseUserManager):
             raise ValueError("Users must have an email address")
 
         user = self.model(
-            email=self.normalize_email(email),
+            email = email
+            #이메일 형식 받는 것 밑에 참고
+            #email=self.normalize_email(email), 
         )
 
         user.set_password(password)
@@ -16,8 +18,12 @@ class UserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password=None):
+        """
+        Creates and saves a superuser with the given email, date of
+        birth and password.
+        """
         user = self.create_user(
-            email,
+            email=email,
             password=password,
         )
         user.is_admin = True
@@ -26,11 +32,15 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
+    username = models.CharField(max_length=20, unique=True)
+    fullname = models.CharField(max_length=20, blank=True)
+    password = models.CharField(max_length=20)
     email = models.EmailField(
         verbose_name="email address",
         max_length=255,
         unique=True,
     )
+    date_of_birth = models.DateField(null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
@@ -44,10 +54,12 @@ class User(AbstractBaseUser):
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
+        # Simplest possible answer: Yes, always
         return True
 
     def has_module_perms(self, app_label):
         "Does the user have permissions to view the app `app_label`?"
+        # Simplest possible answer: Yes, always
         return True
 
     @property

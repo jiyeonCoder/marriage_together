@@ -1,34 +1,53 @@
+from django.shortcuts import render
+from django.db.models import Q
 from rest_framework.views import APIView
+from rest_framework.generics import get_object_or_404
 from rest_framework import status, permissions
 from rest_framework.response import Response
-from rest_framework.generics import get_object_or_404
-from rest_framework_simplejwt.views import TokenObtainPairView
-from users.models import Profile
-
-from users.serializers import UserSerializer, CustomTokenObtainPairSerializer, ProfileSerializer, ProfileCreateSerializer
-
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+)
+from users.models import Profile, User
+from users.serializers import CustomTokenObtainPairSerializer, UserSerializer, UserProfileSerializer, ProfileSerializer, ProfileCreateSerializer
 
 class UserView(APIView):
+    #사용자 정보 조회
+    def get(self, request):
+        return Response(UserSerializer(request.user).data, status=status.HTTP_200_OK)
+
+    #회원가입
     def post(self, request):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response("가입완료!", status=status.HTTP_201_CREATED)
+            return Response({"message: User created successfully"}, status=status.HTTP_201_CREATED)
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message": f"${serializer.errors}"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    #회원 정보 수정
+    def put(self, request):
+        return Response("message: User updated successfully")
+
+    #회원 탈퇴
+    def delete(self, request):
+        return Response("message: User deleted successfully")
+    
+
+class mockView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        print(request.user)
+        user = request.user
+        user.is_admin = True
+        user.save()
+        return Response("message: get 요청")
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
-
-class MockView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
-    def get(self, request):
-        print(request.user)
-        return Response("get 요청")
     
-
 class MyProfileView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     def get(self, request, user_id):
