@@ -65,23 +65,22 @@ function handleLogout(){
 
 
 async function handlePostSubmit(){
-    // const image = document.getElementById("image").value
+    const formData = new FormData();
+    const image = document.getElementById("image").files[0]
     const title = document.getElementById("title").value
     const content = document.getElementById("content").value
-    console.log(title, content)
     const token = localStorage.getItem("access")
+
+    formData.append("image", image)
+    formData.append("title", title)
+    formData.append("content", content)
 
     const response = await fetch('http://127.0.0.1:8000/posts/', {
         headers:{
-            'content-type':'application/json',
             'Authorization': `Bearer ${token}`
         },
         method:'POST',
-        body: JSON.stringify({
-            // "image": image,
-            "title": title,
-            "content": content
-        })
+        body:formData
     })
     console.log(response)
 }
