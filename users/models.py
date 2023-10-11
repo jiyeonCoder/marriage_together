@@ -84,6 +84,7 @@ class Profile(models.Model):
     religion = models.CharField(choices=ReligionChoices.choices, max_length=10)
     my_character = models.TextField()
     purpose_to_join = models.CharField(max_length=100)
+    like = models.ManyToManyField(User, related_name='like_profiles')
 
     def __str__(self):
         return str(self.user)

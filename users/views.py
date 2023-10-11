@@ -66,7 +66,7 @@ class MyProfileView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
     def put(self, request, user_id):
         profile = get_object_or_404(Profile, id=user_id)
         if request.user == profile.user:
@@ -86,3 +86,17 @@ class ProfileView(APIView):
         profile = get_object_or_404(Profile, id=user_id)
         serializer = ProfileSerializer(profile)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+class LikeView(APIView):
+    def post(self, request, profile_id):
+        profile = get_object_or_404(Profile, id=profile_id)
+        if request.user != profile.user:
+            if request.user in profile.like.all():
+                profile.like.remove(request.user)
+                return Response("message: 좋아요 취소!", status=status.HTTP_200_OK)
+            else:
+                profile.like.add(request.user)
+                return Response("message: 좋아요!", status=status.HTTP_200_OK)
+        else:
+            return Response("message: 본인 프로필에는 좋아요 할 수 없습니다.", status=status.HTTP_400_BAD_REQUEST)
