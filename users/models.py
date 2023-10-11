@@ -32,9 +32,8 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    username = models.CharField(max_length=20, unique=True)
-    fullname = models.CharField(max_length=20, blank=True)
-    password = models.CharField(max_length=20)
+    nickname = models.CharField(max_length=20, unique=True)
+    password = models.CharField(max_length=255)
     email = models.EmailField(
         verbose_name="email address",
         max_length=255,
@@ -79,7 +78,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(blank=True, upload_to='profile/%Y/%m/')
     introduce_me = models.TextField()
-    name = models.CharField(max_length=10)
+    fullname = models.CharField(max_length=10)
     age = models.CharField(max_length=3)
     job = models.CharField(max_length=50)
     religion = models.CharField(choices=ReligionChoices.choices, max_length=10)
