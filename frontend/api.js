@@ -69,10 +69,12 @@ async function handlePostSubmit(){
     const title = document.getElementById("title").value
     const content = document.getElementById("content").value
     console.log(title, content)
-    
+    const token = localStorage.getItem("access")
+
     const response = await fetch('http://127.0.0.1:8000/posts/', {
         headers:{
             'content-type':'application/json',
+            'Authorization': `Bearer ${token}`
         },
         method:'POST',
         body: JSON.stringify({
