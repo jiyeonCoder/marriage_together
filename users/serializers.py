@@ -20,6 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
         user = super().create(validated_data)
         password = user.password
         user.set_password(password)
+        nickname = user.nickname
         user.save()
         return user
     

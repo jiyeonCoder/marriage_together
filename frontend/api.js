@@ -30,6 +30,11 @@ async function handleSignup() {
     })
     // sleep(5000);
     console.log(response)
+
+    if (response.status == 201) {
+        alert('회원가입을 축하합니다!')
+        window.location.replace(`${frontend_base_url}/login.html`)
+    }
 }
 
 
@@ -63,6 +68,11 @@ async function handleLogin() {
 
     localStorage.setItem("payload", jsonPayload);
 
+    if (response.status == 200) {
+        alert('로그인 되었습니다!')
+        window.location.replace(`${frontend_base_url}/index.html`)
+    }
+
 }
 
 
@@ -93,4 +103,23 @@ async function handlePostSubmit() {
         })
     })
     console.log(response)
+}
+
+async function getPosts() {
+    const token = localStorage.getItem("access")
+    console.log(token)
+    const response = await fetch(`${backend_base_url}/posts/`, {
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        method: 'GET',
+    })
+    console.log(response)
+    if (response.status == 200) {
+        const response_json = await response.json()
+        return response_json
+    } else {
+        alert("불러오는데 실패했습니다.")
+    }
 }
