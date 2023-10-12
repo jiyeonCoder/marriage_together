@@ -3,10 +3,9 @@ const frontend_base_url = 'http://127.0.0.1:5500'
 
 window.onload = () => {
     console.log("loading 되었음!")
-    // setTimeout(handleSignup, 10000);
 }
 
-// setTimeout((handleSignup)=>console.log("timeout"), 5000);
+
 async function handleSignup() {
     const nickname = document.getElementById("nickname").value
     const email = document.getElementById("email").value
@@ -28,7 +27,6 @@ async function handleSignup() {
             "date_of_birth": date_of_birth,
         })
     })
-    // sleep(5000);
     console.log(response)
 
     if (response.status == 201) {
@@ -84,26 +82,26 @@ function handleLogout() {
 
 
 async function handlePostSubmit() {
-    // const image = document.getElementById("image").value
+    const formData = new FormData();
+    const image = document.getElementById("image").files[0]
     const title = document.getElementById("title").value
     const content = document.getElementById("content").value
-    console.log(title, content)
     const token = localStorage.getItem("access")
+
+    formData.append("image", image)
+    formData.append("title", title)
+    formData.append("content", content)
 
     const response = await fetch(`${backend_base_url}/posts/`, {
         headers: {
-            'content-type': 'application/json',
             'Authorization': `Bearer ${token}`
         },
         method: 'POST',
-        body: JSON.stringify({
-            // "image": image,
-            "title": title,
-            "content": content
-        })
+        body: formData
     })
     console.log(response)
 }
+
 
 async function getPosts() {
     const token = localStorage.getItem("access")
