@@ -33,7 +33,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     nickname = models.CharField(max_length=20, unique=True)
-    password = models.CharField(max_length=20)
+    password = models.CharField(max_length=255)
     email = models.EmailField(
         verbose_name="email address",
         max_length=255,
@@ -78,12 +78,13 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(blank=True, upload_to='profile/%Y/%m/')
     introduce_me = models.TextField()
-    name = models.CharField(max_length=10)
+    fullname = models.CharField(max_length=10)
     age = models.CharField(max_length=3)
     job = models.CharField(max_length=50)
     religion = models.CharField(choices=ReligionChoices.choices, max_length=10)
     my_character = models.TextField()
     purpose_to_join = models.CharField(max_length=100)
+    like = models.ManyToManyField(User, related_name='like_profiles')
 
     def __str__(self):
         return str(self.user)

@@ -57,7 +57,7 @@ class UserAdmin(BaseUserAdmin):
     filter_horizontal = []
 @admin.register(Profile) #@를 붙이면 데코레이터
 class Profileadmin(admin.ModelAdmin):
-    list_display = ['image_tag', 'introduce_me', 'name', 'age', 'job', 'religion', 'my_character', 'purpose_to_join']   #image가 화면에 보이게하려면 method로 넣어서 보이게해야함.보안상 장고가 막아두기때문
+    list_display = ['image_tag', 'introduce_me', 'fullname', 'age', 'job', 'religion', 'my_character', 'purpose_to_join']   #image가 화면에 보이게하려면 method로 넣어서 보이게해야함.보안상 장고가 막아두기때문
     def image_tag(self, profile):
         if not profile.image:
             return mark_safe(f"<img src='' style = 'width: 500px'/>") #보안상 막아둔거 푸는작업

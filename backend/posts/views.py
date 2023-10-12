@@ -62,7 +62,7 @@ class CommentView(APIView):
         # return Response(serializer.data, status=status.HTTP_200_OK)
         """post의 댓글을 보여줍니다.  =>  PostSerializer에서 CommentSerializaer한 값을 가져옵니다. """ 
 
-    def post(self, request):
+    def post(self, request, post_id):
         """
         author = request.user
          data = {
@@ -78,8 +78,8 @@ class CommentView(APIView):
         """
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            serializer.save(author=request.user, post_id=post_id)
+            return Response({'댓글이 작성되었습니다.'}, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         """각 post에 댓글을 생성합니다."""
@@ -87,7 +87,7 @@ class CommentView(APIView):
     def put(self, request, comment_id):
         comment = get_object_or_404(Comment, id=comment_id)
         serializer = CommentSerializer(comment, data=request.data)
-        if request.user == comment.user:
+        if request.user == comment.author:
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -99,9 +99,9 @@ class CommentView(APIView):
 
     def delete(self, request, comment_id):
         comment = get_object_or_404(Comment, id=comment_id)
-        if request.user == comment.user:
+        if request.user == comment.author:
             comment.delete()
-            return Response({'게시글이 삭제되었습니다.'}, status=status.HTTP_204_NO_CONTENT)
+            return Response({'댓글이 삭제되었습니다.'}, status=status.HTTP_204_NO_CONTENT)
         else:
             return Response({'error': '권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
         
