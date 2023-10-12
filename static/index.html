@@ -1,0 +1,247 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Indie Flower";
+      line-height: 1.618em;
+      background-color: #e4d4bb;
+      background-image: repeating-radial-gradient(circle,
+          #E4D4BB, #E7DAC6 50%, #E7DAC6 100%);
+      background-size: 10px 10px;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .wrapper {
+      width: 100%;
+      padding: 0 2rem;
+      text-align: center;
+    }
+
+    .polaroid {
+      background: #fff;
+      padding: 1rem;
+      box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.2);
+    }
+
+    .caption {
+      font-size: 1.125rem;
+      text-align: center;
+      line-height: 2em;
+    }
+
+    .item {
+      display: inline-block;
+      margin-top: 2rem;
+      filter: grayscale(100%);
+    }
+
+    .item .polaroid:before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      transition: all 0.35s;
+    }
+
+    .item:nth-of-type(4n+1) {
+      transform: scale(0.8, 0.8) rotate(5deg);
+      transition: all 0.35s;
+    }
+
+    .item:nth-of-type(4n+1) .polaroid:before {
+      transform: rotate(6deg);
+      height: 20%;
+      width: 47%;
+      bottom: 30px;
+      right: 12px;
+      box-shadow: 0 2.1rem 2rem rgba(0, 0, 0, 0.4);
+    }
+
+    .item:nth-of-type(4n+2) {
+      transform: scale(0.8, 0.8) rotate(-5deg);
+      transition: all 0.35s;
+    }
+
+    .item:nth-of-type(4n+2) .polaroid:before {
+      transform: rotate(-6deg);
+      height: 20%;
+      width: 47%;
+      bottom: 30px;
+      left: 12px;
+      box-shadow: 0 2.1rem 2rem rgba(0, 0, 0, 0.4);
+    }
+
+    .item:nth-of-type(4n+4) {
+      transform: scale(0.8, 0.8) rotate(3deg);
+      transition: all 0.35s;
+    }
+
+    .item:nth-of-type(4n+4) .polaroid:before {
+      transform: rotate(4deg);
+      height: 20%;
+      width: 47%;
+      bottom: 30px;
+      right: 12px;
+      box-shadow: 0 2.1rem 2rem rgba(0, 0, 0, 0.3);
+    }
+
+    .item:nth-of-type(4n+3) {
+      transform: scale(0.8, 0.8) rotate(-3deg);
+      transition: all 0.35s;
+    }
+
+    .item:nth-of-type(4n+3) .polaroid:before {
+      transform: rotate(-4deg);
+      height: 20%;
+      width: 47%;
+      bottom: 30px;
+      left: 12px;
+      box-shadow: 0 2.1rem 2rem rgba(0, 0, 0, 0.3);
+    }
+
+    .item:hover {
+      filter: none;
+      transform: scale(1, 1) rotate(0deg) !important;
+      transition: all 0.35s;
+    }
+
+    .item:hover .polaroid:before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      transform: rotate(0deg);
+      height: 90%;
+      width: 90%;
+      bottom: 0%;
+      right: 5%;
+      box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.2);
+      transition: all 0.35s;
+    }
+
+    #toc-content {
+      display: none;
+    }
+
+    #toc-toggle {
+      cursor: pointer;
+
+    }
+
+    #toc-toggle:hover {
+      text-decoration: underline;
+      color: #2962ff;
+    }
+  </style>
+
+  <title>우리, 결혼해요</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="{% static 'index.js' %}"></script>
+  <script src="{% static 'api.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+  <h1 class="text-center mt-3">우리, 결혼해요</h1>
+  <div id="intro"></div>
+
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">게시글 작성</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </li>
+        </ul>
+        <div class="d-flex">
+          <button class="btn btn-outline-success" type="button">My Profile</button>
+          <button class="btn btn-outline-success" type="button">로그인</button>
+          <button class="btn btn-outline-success" type="button">회원가입</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrapper">
+    <div class="item">
+      <div class="polaroid"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/dXAhQuT.jpg">
+        <div class="caption">By Joshua Sortino</div>
+        <span id="toc-toggle" onclick="openCloseToc()">댓글 보기</span>
+        <ol id="toc-content">
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="polaroid"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/LZkivxR.jpg">
+        <div class="caption">By Cole Patrick</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="polaroid"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/hqcMtrF.jpg">
+        <div class="caption">By Luke Pamer</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="polaroid"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/l867sBU.jpg">
+        <div class="caption">By Alissa Smith</div>
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="polaroid"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/7cQCk5I.jpg">
+        <div class="caption">By Ales Krivec</div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+</body>
+
+</html>
