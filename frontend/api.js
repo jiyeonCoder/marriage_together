@@ -167,3 +167,34 @@ async function getPosts() {
         alert("불러오는데 실패했습니다.")
     }
 }
+
+
+async function moveToOtherProfile() {
+
+    posts = await getPosts()
+
+    let button = document.getElementById("intro2")
+    let nickname = button.innerHTML
+    let user_id = 0;
+
+    for (let i = 0; i < posts.length; i++) {
+        console.log(posts[i].nickname);
+        if (posts[i].nickname == nickname){
+            user_id = posts[i].user
+        }
+    }
+
+    const formData = new FormData();
+    const token = localStorage.getItem("access")
+
+    formData.append("user_id", user_id)
+
+    const response = await fetch(`http://127.0.0.1:8000/users/${user_id}/profile/`, {
+        headers:{
+            'Authorization': `Bearer ${token}`
+        },
+        method:'GET',
+    })
+    console.log(response)
+    window.location.href = "otherprofile.html";
+}
