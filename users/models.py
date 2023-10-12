@@ -3,12 +3,13 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None):
+    def create_user(self, email, username, password=None):
         if not email:
             raise ValueError("Users must have an email address")
 
         user = self.model(
-            email = email
+            email = email,
+            username = username,
             #이메일 형식 받는 것 밑에 참고
             #email=self.normalize_email(email), 
         )
@@ -17,13 +18,14 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password=None):
+    def create_superuser(self, email, username, password=None):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
         """
         user = self.create_user(
             email=email,
+            username=username,
             password=password,
         )
         user.is_admin = True
@@ -47,7 +49,7 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
 
     def __str__(self):
         return self.email
