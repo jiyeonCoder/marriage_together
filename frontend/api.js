@@ -3,13 +3,16 @@ const frontend_base_url = 'http://127.0.0.1:5500'
 
 window.onload = () => {
     console.log("loading 되었음!")
-    // setTimeout(handleSignin, 10000);
+    // setTimeout(handleSignup, 10000);
 }
 
-// setTimeout((handleSignin)=>console.log("timeout"), 5000);
-async function handleSignin() {
+// setTimeout((handleSignup)=>console.log("timeout"), 5000);
+async function handleSignup() {
+    const nickname = document.getElementById("nickname").value
     const email = document.getElementById("email").value
     const password = document.getElementById("password").value
+    const password2 = document.getElementById("password2").value
+    const date_of_birth = document.getElementById("date_of_birth").value
     console.log(email, password)
 
     const response = await fetch(`${backend_base_url}/users/signup/`, {
@@ -18,8 +21,11 @@ async function handleSignin() {
         },
         method: 'POST',
         body: JSON.stringify({
+            "nickname": nickname,
             "email": email,
-            "password": password
+            "password": password,
+            "password2": password2,
+            "date_of_birth": date_of_birth,
         })
     })
     // sleep(5000);
