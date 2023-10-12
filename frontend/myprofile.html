@@ -61,31 +61,31 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">이름</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력하세요">
+                    <input type="text" class="form-control" name="name" id="name" placeholder="이름을 입력하세요">
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">나이</label>
+                <label class="col-sm-2 col-form-label">(만)나이</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력하세요">
+                    <input type="text" class="form-control" name="age" id="age" placeholder="(만)나이을 입력하세요">
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">자기소개(최소 200자)</label>
                 <div class="col-sm-10">
-                    <textarea style="height: 100px;" class="form-control" placeholder="내용을 입력하세요" rows="10" cols="30" id="content" name="content"></textarea>
+                    <textarea style="height: 100px;" class="form-control" placeholder="내용을 입력하세요" rows="10" cols="30" id="introduce_me" name="introduce_me"></textarea>
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">직업</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력하세요">
+                    <input type="text" class="form-control" name="job" id="job" placeholder="직업을 입력하세요">
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">종교</label>
                 <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example">
+                    <select class="form-select" aria-label="Default select example" id="religion" name="religion">
                         <option selected>---선택하세요---</option>
                         <option value="PROTESTANTISM">개신교</option>
                         <option value="BUDDHISM">불교</option>
@@ -98,18 +98,16 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">나의 특징</label>
                 <div class="col-sm-10">
-                    <textarea style="height: 100px;" class="form-control" placeholder="내용을 입력하세요" rows="10" cols="30" id="content" name="content"></textarea>
+                    <textarea style="height: 100px;" class="form-control" placeholder="내용을 입력하세요" rows="10" cols="30" id="my_character" name="my_character"></textarea>
                 </div>
             </div>
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">가입한 이유</label>
                 <div class="col-sm-10">
-                    <textarea style="height: 100px;" class="form-control" placeholder="내용을 입력하세요" rows="10" cols="30" id="content" name="content"></textarea>
+                    <textarea style="height: 100px;" class="form-control" placeholder="내용을 입력하세요" rows="10" cols="30" id="purpose_to_join" name="purpose_to_join"></textarea>
                 </div>
             </div>
-            <a href="index.html">
-                <button type="button" class="btn btn-dark" style="float: right;" onclick="handleProfileSubmit()">내 프로필 저장</button>
-            </a>
+            <button type="button" class="btn btn-dark" style="float: right;" onclick="handleProfileSubmit()">내 프로필 저장</button>
         </form>
     </body>
 </html>

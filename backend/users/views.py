@@ -50,8 +50,8 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     
 class MyProfileView(APIView):
     permission_classes = [permissions.IsAuthenticated]
-    def get(self, request, user_id):
-        profile = get_object_or_404(Profile, id=user_id)
+    def get(self, request):
+        profile = get_object_or_404(Profile, id=request.user_id)
         if request.user == profile.user:
             # profile = get_object_or_404(Profile, id=user_id)
             serializer = ProfileSerializer(profile)
@@ -59,16 +59,17 @@ class MyProfileView(APIView):
         else:
             return Response({'error': '권한이 없습니다.'}, status=status.HTTP_401_UNAUTHORIZED)
     
-    def post(self, request, user_id):
+    def post(self, request):
         serializer = ProfileCreateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
+            print(serializer.errors)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-    def put(self, request, user_id):
-        profile = get_object_or_404(Profile, id=user_id)
+    def put(self, request):
+        profile = get_object_or_404(Profile, id=request.user_id)
         if request.user == profile.user:
             serializer = ProfileCreateSerializer(profile, data=request.data)
             if serializer.is_valid():
