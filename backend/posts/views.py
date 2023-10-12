@@ -53,13 +53,13 @@ class PostDetailView(APIView):
         
 
 class CommentView(APIView):
-    def get(self, request):
+    def get(self, request, post_id):
         # author = request.data.get('author')
         # post = request.data.get('post')
-        # post = get_object_or_404(Post, id=post_id)
-        # comments = post.comment_set.all()
-        # serializer = CommentSerializer(comments, many=True)
-        # return Response(serializer.data, status=status.HTTP_200_OK)
+        post = get_object_or_404(Post, id=post_id)
+        comments = post.post_comment.all()
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
         """post의 댓글을 보여줍니다.  =>  PostSerializer에서 CommentSerializaer한 값을 가져옵니다. """ 
 
     def post(self, request, post_id):
