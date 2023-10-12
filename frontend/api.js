@@ -100,6 +100,7 @@ async function handlePostSubmit() {
         body: formData
     })
     console.log(response)
+    window.location.href = "index.html";
 }
 
 
