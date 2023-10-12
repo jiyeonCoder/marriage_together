@@ -22,6 +22,7 @@
 
     img {
       max-width: 100%;
+      min-height: 280px;
       height: auto;
     }
 
@@ -46,6 +47,7 @@
     .item {
       display: inline-block;
       margin-top: 2rem;
+      max-width: 432px;
       filter: grayscale(100%);
     }
 
@@ -131,18 +133,12 @@
       transition: all 0.35s;
     }
 
-    #toc-content {
-      display: none;
+    .more {
+      margin-top: 10px;
     }
 
-    #toc-toggle {
-      cursor: pointer;
-
-    }
-
-    #toc-toggle:hover {
-      text-decoration: underline;
-      color: #2962ff;
+    .comments {
+      margin-top: 5px;
     }
   </style>
 
@@ -200,16 +196,14 @@
     </div>
   </nav>
 
-  <div class="wrapper">
+  <div class="wrapper" id="post_list">
     <div class="item">
       <div class="polaroid"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/dXAhQuT.jpg">
         <div class="caption">By Joshua Sortino</div>
-        <span id="toc-toggle" onclick="openCloseToc()">댓글 보기</span>
-        <ol id="toc-content">
-          <li>HTML</li>
-          <li>CSS</li>
-          <li>JavaScript</li>
-        </ol>
+        <details class="more">
+          <summary>접기 버튼</summary>
+          <div>굿</div>
+        </details>
       </div>
     </div>
 
@@ -219,23 +213,14 @@
       </div>
     </div>
 
-    <div class="item">
-      <div class="polaroid"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/hqcMtrF.jpg">
-        <div class="caption">By Luke Pamer</div>
-      </div>
-    </div>
 
-    <div class="item">
-      <div class="polaroid"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/l867sBU.jpg">
-        <div class="caption">By Alissa Smith</div>
-      </div>
-    </div>
+  </div>
 
-    <div class="item">
-      <div class="polaroid"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/7cQCk5I.jpg">
-        <div class="caption">By Ales Krivec</div>
-      </div>
-    </div>
+
+
+
+
+
 
   </div>
 

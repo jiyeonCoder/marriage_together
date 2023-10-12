@@ -28,10 +28,9 @@ async function handleSignup() {
         })
     })
     console.log(response)
-
     if (response.status == 201) {
         alert('회원가입을 축하합니다!')
-        window.location.assign(`${frontend_base_url}/login.html`)
+        window.location.replace(`${frontend_base_url}/login.html`)
     }
 }
 
@@ -114,6 +113,19 @@ async function getPosts() {
         method: 'GET',
     })
     console.log(response)
+    if (response.status == 200) {
+        const response_json = await response.json()
+        return response_json
+    } else {
+        alert("로그인하셔야 원활한 서비스 이용이 가능합니다.")
+        window.location.replace(`${frontend_base_url}/login.html`)
+    }
+}
+
+
+async function getComments(articleId) {
+    const response = await fetch(`${backend_base_url}/posts/${articleId}/comment/`,)
+    console.log('response')
     if (response.status == 200) {
         const response_json = await response.json()
         return response_json
