@@ -1,9 +1,8 @@
 window.onload = ()=>{
     console.log("loading 되었음!")
-    // setTimeout(handleSignup, 10000);
 }
     
-// setTimeout((handleSignup)=>console.log("timeout"), 5000);
+
 async function handleSignup(){
     const nickname = document.getElementById("nickname").value
     const email = document.getElementById("email").value
@@ -25,8 +24,8 @@ async function handleSignup(){
             "date_of_birth": date_of_birth,
         })
     })
-    // sleep(5000);
     console.log(response)
+    // window.location.replace = "login.html";
 }
 
 
@@ -60,6 +59,7 @@ async function handleLogin(){
 
     localStorage.setItem("payload", jsonPayload);
     
+    window.location.href = "index.html";
 }
 
 
@@ -71,21 +71,22 @@ function handleLogout(){
 
 
 async function handlePostSubmit(){
-    // const image = document.getElementById("image").value
+    const formData = new FormData();
+    const image = document.getElementById("image").files[0]
     const title = document.getElementById("title").value
     const content = document.getElementById("content").value
-    console.log(title, content)
-    
+    const token = localStorage.getItem("access")
+
+    formData.append("image", image)
+    formData.append("title", title)
+    formData.append("content", content)
+
     const response = await fetch('http://127.0.0.1:8000/posts/', {
         headers:{
-            'content-type':'application/json',
+            'Authorization': `Bearer ${token}`
         },
         method:'POST',
-        body: JSON.stringify({
-            // "image": image,
-            "title": title,
-            "content": content
-        })
+        body:formData
     })
     console.log(response)
 }
