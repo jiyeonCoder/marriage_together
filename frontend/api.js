@@ -10,6 +10,8 @@ async function handleSignup(){
     const password = document.getElementById("password").value
     const password2 = document.getElementById("password2").value
     const date_of_birth = document.getElementById("date_of_birth").value
+    const country = document.getElementById("country").value
+    const city = document.getElementById("city").value
     console.log(email, password)
     
     const response = await fetch('http://127.0.0.1:8000/users/signup/', {
@@ -23,6 +25,8 @@ async function handleSignup(){
             "password": password,
             "password2": password2,
             "date_of_birth": date_of_birth,
+            "country" : country,
+            "city" : city,
         })
     })
     // sleep(5000);

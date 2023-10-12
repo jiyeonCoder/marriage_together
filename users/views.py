@@ -9,6 +9,7 @@ from rest_framework_simplejwt.views import (
 )
 from users.models import Profile, User
 from users.serializers import CustomTokenObtainPairSerializer, UserSerializer, UserProfileSerializer, ProfileSerializer, ProfileCreateSerializer
+from cities_light.models import Country, City
 
 class UserView(APIView):
     #사용자 정보 조회
@@ -23,7 +24,6 @@ class UserView(APIView):
             return Response({"message: User created successfully"}, status=status.HTTP_201_CREATED)
         else:
             return Response({"message": f"${serializer.errors}"}, status=status.HTTP_400_BAD_REQUEST)
-    
     #회원 정보 수정
     def put(self, request):
         return Response("message: User updated successfully")
@@ -86,3 +86,15 @@ class ProfileView(APIView):
         profile = get_object_or_404(Profile, id=user_id)
         serializer = ProfileSerializer(profile)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class CountryView(APIView):
+    def get(self, request ):
+        countries = Country.objects.all().values_list("id","name")
+        return Response(countries)
+
+class CityView(APIView):
+    def get(self, request, country_id ):
+        cities = City.objects.filter(country_id = country_id).values_list("id","name")
+        return Response(cities)   
+
+    

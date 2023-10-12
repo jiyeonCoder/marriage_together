@@ -1,22 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="api.js"></script>
     <title>Signup</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>signup page</h1>
     <form>
-        <input type="nickname" nickname="nickname" id="nickname" placeholder="nickname" />
-        <input type="email" name="email" id="email" placeholder="email" />
-        <input type="password" name="password" id="password" placeholder="password" />
-        <input type="password" name="password2" id="password2" placeholder="password2" />
-        <label for="date_of_birth">date of birth:</label>
-        <input type="date" id="date_of_birth" name="date_of_birth" value="1990-12-25" min="1950-01-01" max="2004-01-01" />
-        <button type="button" onclick="handleSignup()">회원가입 하기</button>
+      <input
+        type="nickname"
+        nickname="nickname"
+        id="nickname"
+        placeholder="nickname"
+      /><br />
+      <input type="email" name="email" id="email" placeholder="email" /><br />
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="password"
+      /><br />
+      <input
+        type="password"
+        name="password2"
+        id="password2"
+        placeholder="password2"
+      /><br />
+      <label for="date_of_birth">date of birth:</label>
+      <input
+        type="date"
+        id="date_of_birth"
+        name="date_of_birth"
+        value="1990-12-25"
+        min="1950-01-01"
+        max="2004-01-01"
+      /><br />
+      <div class="card-body text-center">
+        <select name="country" class="country" id="country_id">
+          <option value="">Select Country</option>
+        </select>
+        <select name="city" class="city" id="city">
+          <option value="">Select City</option>
+        </select>
+      </div>
+      <title>Dependent Drop Down</title>
+      <link rel="stylesheet" href="style.css">
+      <div class="container">
+        <h2>Multi Level Dependent Drop down</h2>
+      </div>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+      <script src="//geodata.solutions/includes/countrystatecity.js"></script>
+      <button type="button" onclick="handleSignup()">회원가입 하기</button>
     </form>
-    
-</body>
+  </body>
 </html>
