@@ -9,9 +9,8 @@ async function handleSignup(){
     const password = document.getElementById("password").value
     const password2 = document.getElementById("password2").value
     const date_of_birth = document.getElementById("date_of_birth").value
-    console.log(email, password)
     
-    const response = await fetch('http://127.0.0.1:8000/users/signup/', {
+    const response = await fetch(`http://127.0.0.1:8000/users/signup/`, {
         headers:{
             'content-type':'application/json',
         },
@@ -26,7 +25,7 @@ async function handleSignup(){
     })
     console.log(response)
     // window.location.replace = "login.html";
-    // window.location.href = "login.html";
+    window.location.href = "login.html";
 }
 
 
@@ -35,7 +34,7 @@ async function handleLogin(){
     const password = document.getElementById("password").value
     console.log(email, password)
 
-    const response = await fetch('http://127.0.0.1:8000/users/login/', {
+    const response = await fetch(`http://127.0.0.1:8000/users/login/`, {
         headers:{
             'content-type':'application/json',
         },
@@ -82,7 +81,7 @@ async function handlePostSubmit(){
     formData.append("title", title)
     formData.append("content", content)
 
-    const response = await fetch('http://127.0.0.1:8000/posts/', {
+    const response = await fetch(`http://127.0.0.1:8000/posts/`, {
         headers:{
             'Authorization': `Bearer ${token}`
         },
@@ -117,10 +116,6 @@ async function handleProfileSubmit(){
     formData.append("my_character", my_character)
     formData.append("purpose_to_join", purpose_to_join)
 
-    
-    console.log(religion)
-
-    console.log(formData)
 
     // const payload = localStorage.getItem("payload");
     // const payload_parse = JSON.parse(payload)
@@ -139,4 +134,5 @@ async function handleProfileSubmit(){
         body:formData
     })
     console.log(response)
+    window.location.href = "index.html";
 }
