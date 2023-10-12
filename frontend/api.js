@@ -1,22 +1,26 @@
-window.onload = ()=>{
+const backend_base_url = 'http://127.0.0.1:8000'
+const frontend_base_url = 'http://127.0.0.1:5500/frontend'
+
+window.onload = () => {
     console.log("loading 되었음!")
 }
-    
 
-async function handleSignup(){
+
+async function handleSignup() {
     const nickname = document.getElementById("nickname").value
     const email = document.getElementById("email").value
     const password = document.getElementById("password").value
     const password2 = document.getElementById("password2").value
     const date_of_birth = document.getElementById("date_of_birth").value
-    
-    const response = await fetch(`http://127.0.0.1:8000/users/signup/`, {
-        headers:{
-            'content-type':'application/json',
+    console.log(email, password)
+
+    const response = await fetch(`${backend_base_url}/users/signup/`, {
+        headers: {
+            'content-type': 'application/json',
         },
-        method:'POST',
+        method: 'POST',
         body: JSON.stringify({
-            "nickname" : nickname,
+            "nickname": nickname,
             "email": email,
             "password": password,
             "password2": password2,
@@ -24,21 +28,24 @@ async function handleSignup(){
         })
     })
     console.log(response)
-    // window.location.replace = "login.html";
-    window.location.href = "login.html";
+
+    if (response.status == 201) {
+        alert('회원가입을 축하합니다!')
+        window.location.assign(`${frontend_base_url}/login.html`)
+    }
 }
 
 
-async function handleLogin(){
+async function handleLogin() {
     const email = document.getElementById("email").value
     const password = document.getElementById("password").value
     console.log(email, password)
 
-    const response = await fetch(`http://127.0.0.1:8000/users/login/`, {
-        headers:{
-            'content-type':'application/json',
+    const response = await fetch(`${backend_base_url}/users/login/`, {
+        headers: {
+            'content-type': 'application/json',
         },
-        method:'POST',
+        method: 'POST',
         body: JSON.stringify({
             "email": email,
             "password": password
@@ -58,19 +65,23 @@ async function handleLogin(){
     }).join(''));
 
     localStorage.setItem("payload", jsonPayload);
-    
-    window.location.href = "myprofile.html";
+
+    if (response.status == 200) {
+        alert('로그인 되었습니다!')
+        window.location.replace(`${frontend_base_url}/index.html`)
+    }
+
 }
 
 
-function handleLogout(){
+function handleLogout() {
     localStorage.removeItem("access")
     localStorage.removeItem("refresh")
     localStorage.removeItem("payload")
 }
 
 
-async function handlePostSubmit(){
+async function handlePostSubmit() {
     const formData = new FormData();
     const image = document.getElementById("image").files[0]
     const title = document.getElementById("title").value
@@ -81,12 +92,12 @@ async function handlePostSubmit(){
     formData.append("title", title)
     formData.append("content", content)
 
-    const response = await fetch(`http://127.0.0.1:8000/posts/`, {
-        headers:{
+    const response = await fetch(`${backend_base_url}/posts/`, {
+        headers: {
             'Authorization': `Bearer ${token}`
         },
-        method:'POST',
-        body:formData
+        method: 'POST',
+        body: formData
     })
     console.log(response)
 }
@@ -97,7 +108,7 @@ async function handleProfileSubmit(){
     const formData = new FormData();
 
     const image = document.getElementById("image").files[0]
-    const name = document.getElementById("name").value
+    const fullname = document.getElementById("fullname").value
     const age = document.getElementById("age").value
     const introduce_me = document.getElementById("introduce_me").value
     const job = document.getElementById("job").value
@@ -108,7 +119,7 @@ async function handleProfileSubmit(){
 
 
     formData.append("image", image)
-    formData.append("name", name)
+    formData.append("fullname", fullname)
     formData.append("age", age)
     formData.append("introduce_me", introduce_me)
     formData.append("job", job)
@@ -135,4 +146,23 @@ async function handleProfileSubmit(){
     })
     console.log(response)
     window.location.href = "index.html";
+}
+
+async function getPosts() {
+    const token = localStorage.getItem("access")
+    console.log(token)
+    const response = await fetch(`${backend_base_url}/posts/`, {
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        method: 'GET',
+    })
+    console.log(response)
+    if (response.status == 200) {
+        const response_json = await response.json()
+        return response_json
+    } else {
+        alert("불러오는데 실패했습니다.")
+    }
 }
