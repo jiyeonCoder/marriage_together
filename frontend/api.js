@@ -1,5 +1,5 @@
 const backend_base_url = 'http://127.0.0.1:8000'
-const frontend_base_url = 'http://127.0.0.1:5500'
+const frontend_base_url = 'http://127.0.0.1:5500/frontend'
 
 window.onload = () => {
     console.log("loading 되었음!")
@@ -31,7 +31,7 @@ async function handleSignup() {
 
     if (response.status == 201) {
         alert('회원가입을 축하합니다!')
-        window.location.replace(`${frontend_base_url}/login.html`)
+        window.location.assign(`${frontend_base_url}/login.html`)
     }
 }
 
