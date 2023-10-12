@@ -4,11 +4,10 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="api.js"></script>
+        <script src="index.js"></script>
         <title>우리, 결혼해요</title>
-
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-
     </head>
     <body>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -50,64 +49,33 @@
                 </div>
             </div>
         </nav>
-        <h1 style="text-align: center; margin: 100px;">My Profile</h1>
-        <form style=" margin: 100px; padding: 50px; border: solid 1px black;">
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">이미지 업로드</label>
-                <div class="col-sm-10">
-                    <input type="file" class="form-control" name="image" id="image" style="margin-bottom: 20px;">
-                </div>
+
+        <h1 style="text-align: center; margin: 100px;">Profile</h1>
+        
+        <div id="fullname"></div>
+        <div id="age"></div>
+        <div id="introduce_me"></div>
+        <div id="job"></div>
+        <div id="religion"></div>
+        <div id="my_character"></div>
+        <div id="purpose_to_join"></div>
+        
+        <div class="card" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             </div>
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">이름</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="fullname" id="fullname" placeholder="이름을 입력하세요">
-                </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">An item</li>
+              <li class="list-group-item">A second item</li>
+              <li class="list-group-item">A third item</li>
+            </ul>
+            <div class="card-body">
+              <a href="#" class="card-link">Card link</a>
+              <a href="#" class="card-link">Another link</a>
             </div>
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">(만)나이</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="age" id="age" placeholder="(만)나이을 입력하세요">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">자기소개(최소 200자)</label>
-                <div class="col-sm-10">
-                    <textarea style="height: 100px;" class="form-control" placeholder="내용을 입력하세요" rows="10" cols="30" id="introduce_me" name="introduce_me"></textarea>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">직업</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" name="job" id="job" placeholder="직업을 입력하세요">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">종교</label>
-                <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example" id="religion" name="religion">
-                        <option selected>---선택하세요---</option>
-                        <option value="PROTESTANTISM">개신교</option>
-                        <option value="BUDDHISM">불교</option>
-                        <option value="CATHOLICISM">천주교</option>
-                        <option value="OTHERS">기타</option>
-                        <option value="NO_RELIGION">종교 없음</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">나의 특징</label>
-                <div class="col-sm-10">
-                    <textarea style="height: 100px;" class="form-control" placeholder="내용을 입력하세요" rows="10" cols="30" id="my_character" name="my_character"></textarea>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">가입한 이유</label>
-                <div class="col-sm-10">
-                    <textarea style="height: 100px;" class="form-control" placeholder="내용을 입력하세요" rows="10" cols="30" id="purpose_to_join" name="purpose_to_join"></textarea>
-                </div>
-            </div>
-            <button type="button" class="btn btn-dark" style="float: right;" onclick="handleProfileSubmit()">내 프로필 저장</button>
-        </form>
+          </div>
+
     </body>
 </html>
