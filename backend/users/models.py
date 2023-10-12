@@ -33,7 +33,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     nickname = models.CharField(max_length=20, unique=True)
-    password = models.CharField(max_length=20)
+    password = models.CharField(max_length=255)
     email = models.EmailField(
         verbose_name="email address",
         max_length=255,
@@ -72,21 +72,22 @@ class User(AbstractBaseUser):
 
 class Profile(models.Model):
     class ReligionChoices(models.TextChoices):
-        PROTESTANTISM = '개신교'
-        BUDDHISM = '불교'
-        CATHOLICISM = '천주교'
-        OTHERS = '기타'
-        NO_RELIGION = '종교 없음'
+        PROTESTANTISM = 'PROTESTANTISM'
+        BUDDHISM = 'BUDDHISM'
+        CATHOLICISM = 'CATHOLICISM'
+        OTHERS = 'OTHERS'
+        NO_RELIGION = 'NO_RELIGION'
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(blank=True, upload_to='profile/%Y/%m/')
     introduce_me = models.TextField()
-    name = models.CharField(max_length=10)
+    fullname = models.CharField(max_length=10)
     age = models.CharField(max_length=3)
     job = models.CharField(max_length=50)
-    religion = models.CharField(choices=ReligionChoices.choices, max_length=10)
+    religion = models.CharField(choices=ReligionChoices.choices, max_length=20)
     my_character = models.TextField()
     purpose_to_join = models.CharField(max_length=100)
+    like = models.ManyToManyField(User, related_name='like_profiles')
 
     def __str__(self):
         return str(self.user)
