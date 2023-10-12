@@ -1,19 +1,22 @@
-window.onload = ()=>{
+const backend_base_url = 'http://127.0.0.1:8000'
+const frontend_base_url = 'http://127.0.0.1:5500'
+
+window.onload = () => {
     console.log("loading 되었음!")
     // setTimeout(handleSignin, 10000);
 }
-    
+
 // setTimeout((handleSignin)=>console.log("timeout"), 5000);
-async function handleSignin(){
+async function handleSignin() {
     const email = document.getElementById("email").value
     const password = document.getElementById("password").value
     console.log(email, password)
-    
-    const response = await fetch('http://127.0.0.1:8000/users/signup/', {
-        headers:{
-            'content-type':'application/json',
+
+    const response = await fetch(`${backend_base_url}/users/signup/`, {
+        headers: {
+            'content-type': 'application/json',
         },
-        method:'POST',
+        method: 'POST',
         body: JSON.stringify({
             "email": email,
             "password": password
@@ -24,16 +27,16 @@ async function handleSignin(){
 }
 
 
-async function handleLogin(){
+async function handleLogin() {
     const email = document.getElementById("email").value
     const password = document.getElementById("password").value
     console.log(email, password)
 
-    const response = await fetch('http://127.0.0.1:8000/users/login/', {
-        headers:{
-            'content-type':'application/json',
+    const response = await fetch(`${backend_base_url}/users/login/`, {
+        headers: {
+            'content-type': 'application/json',
         },
-        method:'POST',
+        method: 'POST',
         body: JSON.stringify({
             "email": email,
             "password": password
@@ -53,30 +56,30 @@ async function handleLogin(){
     }).join(''));
 
     localStorage.setItem("payload", jsonPayload);
-    
+
 }
 
 
-function handleLogout(){
+function handleLogout() {
     localStorage.removeItem("access")
     localStorage.removeItem("refresh")
     localStorage.removeItem("payload")
 }
 
 
-async function handlePostSubmit(){
+async function handlePostSubmit() {
     // const image = document.getElementById("image").value
     const title = document.getElementById("title").value
     const content = document.getElementById("content").value
     console.log(title, content)
     const token = localStorage.getItem("access")
 
-    const response = await fetch('http://127.0.0.1:8000/posts/', {
-        headers:{
-            'content-type':'application/json',
+    const response = await fetch(`${backend_base_url}/posts/`, {
+        headers: {
+            'content-type': 'application/json',
             'Authorization': `Bearer ${token}`
         },
-        method:'POST',
+        method: 'POST',
         body: JSON.stringify({
             // "image": image,
             "title": title,
