@@ -25,6 +25,7 @@ async function handleSignup(){
         })
     })
     console.log(response)
+    // window.location.replace = "login.html";
 }
 
 
