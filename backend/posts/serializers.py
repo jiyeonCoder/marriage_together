@@ -26,6 +26,10 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     post_comment = CommentSerializer(many=True)
+    nickname = serializers.SerializerMethodField()
+
+    def get_nickname(self, obj):
+        return obj.user.nickname
 
     class Meta:
         model = Post

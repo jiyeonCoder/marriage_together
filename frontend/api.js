@@ -67,7 +67,7 @@ async function handleLogin() {
 
     if (response.status == 200) {
         alert('로그인 되었습니다!')
-        window.location.replace(`${frontend_base_url}/index.html`)
+        window.location.replace(`${frontend_base_url}/frontend/index.html`)
     }
 
 }
@@ -180,3 +180,33 @@ async function getComments(articleId) {
     }
 }
 
+
+async function moveToOtherProfile() {
+
+    posts = await getPosts()
+
+    let button = document.getElementById("intro2")
+    let nickname = button.innerHTML
+    let user_id = 0;
+
+    for (let i = 0; i < posts.length; i++) {
+        console.log(posts[i].nickname);
+        if (posts[i].nickname == nickname) {
+            user_id = posts[i].user
+        }
+    }
+
+    const formData = new FormData();
+    const token = localStorage.getItem("access")
+
+    formData.append("user_id", user_id)
+
+    const response = await fetch(`http://127.0.0.1:8000/users/${user_id}/profile/`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        method: 'GET',
+    })
+
+    window.location.href = "otherprofile.html";
+}
