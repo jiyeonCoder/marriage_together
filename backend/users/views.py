@@ -49,37 +49,37 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
     
-class MyProfileView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
-    def get(self, request):
-        profile = get_object_or_404(Profile, id=request.user_id)
-        if request.user == profile.user:
-            # profile = get_object_or_404(Profile, id=user_id)
-            serializer = ProfileSerializer(profile)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': '권한이 없습니다.'}, status=status.HTTP_401_UNAUTHORIZED)
+# class MyProfileView(APIView):
+#     permission_classes = [permissions.IsAuthenticated]
+#     def get(self, request):
+#         profile = get_object_or_404(Profile, id=request.user_id)
+#         if request.user == profile.user:
+#             # profile = get_object_or_404(Profile, id=user_id)
+#             serializer = ProfileSerializer(profile)
+#             return Response(serializer.data, status=status.HTTP_200_OK)
+#         else:
+#             return Response({'error': '권한이 없습니다.'}, status=status.HTTP_401_UNAUTHORIZED)
     
-    def post(self, request):
-        serializer = ProfileCreateSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save(user=request.user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        else:
-            print(serializer.errors)
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     def post(self, request):
+#         serializer = ProfileCreateSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save(user=request.user)
+#             return Response(serializer.data, status=status.HTTP_200_OK)
+#         else:
+#             print(serializer.errors)
+#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-    def put(self, request):
-        profile = get_object_or_404(Profile, id=request.user_id)
-        if request.user == profile.user:
-            serializer = ProfileCreateSerializer(profile, data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        else:
-            return Response({'error': '권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
+#     def put(self, request):
+#         profile = get_object_or_404(Profile, id=request.user_id)
+#         if request.user == profile.user:
+#             serializer = ProfileCreateSerializer(profile, data=request.data)
+#             if serializer.is_valid():
+#                 serializer.save()
+#                 return Response(serializer.data, status=status.HTTP_200_OK)
+#             else:
+#                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#         else:
+#             return Response({'error': '권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
 
 
 class ProfileView(APIView):
@@ -89,6 +89,31 @@ class ProfileView(APIView):
         serializer = ProfileSerializer(profile)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
+class MyProfileView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        profile, created = Profile.objects.get_or_create(user=request.user)
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request):
+        profile, created = Profile.objects.get_or_create(user=request.user)
+        serializer = ProfileCreateSerializer(profile, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request):
+        profile, created = Profile.objects.get_or_create(user=request.user)
+        serializer = ProfileCreateSerializer(profile, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class LikeView(APIView):
     def post(self, request, profile_id):
