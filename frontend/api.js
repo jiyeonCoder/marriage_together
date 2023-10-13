@@ -200,7 +200,7 @@
 
 
 const backend_base_url = 'http://127.0.0.1:8000';
-const frontend_base_url = 'http://127.0.0.1:5500';
+const frontend_base_url = 'http://127.0.0.1:5500/frontend';
 
 async function fetchApi(url, method, body = null, isFormData = false) {
     const headers = {};
@@ -346,7 +346,7 @@ async function handleProfileSubmit() {
 // profile.js
 async function loadProfileData() {
     try {
-        const response = await fetch('http://your-server-api/profile', {
+        const response = await fetch(`${backend_base_url}/users/myprofile`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem("access")}`
