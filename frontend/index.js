@@ -11,8 +11,7 @@ window.addEventListener('load', function () {
 
 window.addEventListener('load', async function loadPosts() {
     posts = await getPosts()
-    console.log(posts)
-    intro2.innerText = posts[4].nickname
+    // intro2.innerText = posts[1].nickname
 }
 )
 

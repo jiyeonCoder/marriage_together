@@ -28,10 +28,11 @@ async function handleSignup() {
         })
     })
     console.log(response)
+    
 
     if (response.status == 201) {
         alert('회원가입을 축하합니다!')
-        window.location.assign(`${frontend_base_url}/login.html`)
+        window.location.assign(`${frontend_base_url}/frontend/login.html`)
     }
 }
 
@@ -68,7 +69,7 @@ async function handleLogin() {
 
     if (response.status == 200) {
         alert('로그인 되었습니다!')
-        window.location.replace(`${frontend_base_url}/index.html`)
+        window.location.replace(`${frontend_base_url}/frontend/index.html`)
     }
 
 }
@@ -195,6 +196,6 @@ async function moveToOtherProfile() {
         },
         method:'GET',
     })
-    console.log(response)
+
     window.location.href = "otherprofile.html";
 }
