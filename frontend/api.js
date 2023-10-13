@@ -103,7 +103,7 @@ async function handlePostSubmit() {
 }
 
 
-async function handleProfileSubmit(){
+async function handleProfileSubmit() {
 
     const formData = new FormData();
 
@@ -138,11 +138,11 @@ async function handleProfileSubmit(){
 
 
     const response = await fetch(`http://127.0.0.1:8000/users/myprofile/`, {
-        headers:{
+        headers: {
             'Authorization': `Bearer ${token}`
         },
-        method:'POST',
-        body:formData
+        method: 'POST',
+        body: formData
     })
     console.log(response)
     window.location.href = "index.html";
@@ -179,3 +179,4 @@ async function getComments(articleId) {
         alert("불러오는데 실패했습니다.")
     }
 }
+
