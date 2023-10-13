@@ -128,13 +128,13 @@
 //     formData.append("purpose_to_join", purpose_to_join)
 
 
-//     // const payload = localStorage.getItem("payload");
-//     // const payload_parse = JSON.parse(payload)
-//     // console.log(payload_parse.user_id)
-//     // user_id = payload_parse.user_id
+// const payload = localStorage.getItem("payload");
+// const payload_parse = JSON.parse(payload)
+// console.log(payload_parse.user_id)
+// user_id = payload_parse.user_id
 
-//     // const intro = document.getElementById("intro")
-//     // intro.innerText = payload_parse.email
+// const intro = document.getElementById("intro")
+// intro.innerText = payload_parse.email
 
 
 //     const response = await fetch(`http://127.0.0.1:8000/users/myprofile/`, {
@@ -148,24 +148,25 @@
 //     window.location.href = "index.html";
 // }
 
-// async function getPosts() {
-//     const token = localStorage.getItem("access")
-//     console.log(token)
-//     const response = await fetch(`${backend_base_url}/posts/`, {
-//         headers: {
-//             'content-type': 'application/json',
-//             'Authorization': `Bearer ${token}`
-//         },
-//         method: 'GET',
-//     })
-//     console.log(response)
-//     if (response.status == 200) {
-//         const response_json = await response.json()
-//         return response_json
-//     } else {
-//         alert("불러오는데 실패했습니다.")
-//     }
-// }
+async function getPosts() {
+    const token = localStorage.getItem("access")
+    console.log(token)
+    const response = await fetch(`${backend_base_url}/posts/`, {
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        method: 'GET',
+    })
+    console.log(response)
+    if (response.status == 200) {
+        const response_json = await response.json()
+        return response_json
+    } else {
+        alert("로그인하셔야 서비스 이용이 가능합니다.")
+        window.location.replace(`${frontend_base_url}/login.html`);
+    }
+}
 
 
 // async function moveToOtherProfile() {
