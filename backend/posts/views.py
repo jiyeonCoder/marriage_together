@@ -59,6 +59,7 @@ class CommentView(APIView):
         post = get_object_or_404(Post, id=post_id)
         comments = post.post_comment.all()
         serializer = CommentSerializer(comments, many=True)
+        serializer.save(author=request.user, post_id=post_id)
         return Response(serializer.data, status=status.HTTP_200_OK)
         """post의 댓글을 보여줍니다.  =>  PostSerializer에서 CommentSerializaer한 값을 가져옵니다. """ 
 
